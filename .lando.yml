@@ -1,0 +1,73 @@
+name: dash-beta
+env_file:
+  - .env
+
+services:
+  appserver:
+    type: php:7.2
+    via: apache
+    ssl: true
+    webroot: .
+    xdebug: true
+
+  betadb:
+    type: 'mysql:5.7'
+    portforward: true
+    creds:
+      database: app
+      user: mysql
+      password: mysql
+    run_as_root:
+      - tar -xvzf /app/.lando/mysql/dbs.tar.gz -C /app/.lando/mysql/
+      - mysql -uroot -e "CREATE DATABASE IF NOT EXISTS records; GRANT SUPER ON *.* TO 'mysql'@'%' IDENTIFIED by 'mysql'; GRANT ALL PRIVILEGES ON records.* TO 'mysql'@'%' IDENTIFIED by 'mysql'; GRANT ALTER ROUTINE, CREATE ROUTINE, EXECUTE ON records.* TO 'mysql'@'%' IDENTIFIED by 'mysql'"
+      - mysql -uroot app < /app/.lando/mysql/beta_app.sql
+      - mysql -uroot records < /app/.lando/mysql/beta_records.sql
+
+  prddb:
+    type: 'mysql:5.7'
+    portforward: true
+    creds:
+      database: app
+      user: mysql
+      password: mysql
+    run_as_root:
+      - mysql -uroot -e "CREATE DATABASE IF NOT EXISTS records; GRANT SUPER ON *.* TO 'mysql'@'%' IDENTIFIED by 'mysql'; GRANT ALL PRIVILEGES ON records.* TO 'mysql'@'%' IDENTIFIED by 'mysql'; GRANT ALTER ROUTINE, CREATE ROUTINE, EXECUTE ON records.* TO 'mysql'@'%' IDENTIFIED by 'mysql'"
+      - mysql -uroot app < /app/.lando/mysql/prd.sql
+      - rm /app/.lando/mysql/*.sql
+
+
+tooling:
+  composer:
+    service: appserver
+    description: Run composer commands
+    cmd:
+      - composer
+  php:
+    service: appserver
+
+  mysqlb:
+    service: betadb
+    cmd: mysql -uroot
+
+  mysqlp:
+    service: betadb
+    cmd: mysql -uroot
+
+  dash-import:
+    service: appdb
+    cmd: /app/import.sh
+    describe: lando dash-import <db> <file>
+
+  'db-import <file>':
+      service: appdb
+      description: Imports a dump file into a database service
+      cmd: /helpers/sql-import.sh
+      options:
+        host:
+          description: Database to use
+          default: app
+          alias:
+            - h
+        no-wipe:
+          description: Do not destroy the existing database before an import
+          boolean: true

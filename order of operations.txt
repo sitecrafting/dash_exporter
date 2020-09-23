@@ -1,0 +1,36 @@
+Order of Operations:
+1.  Dedupe studios
+2.  Projects
+3.  Imports
+4.  Versions
+    units
+    setups
+    scenes
+    tapes
+    record_types
+5.  records
+6.  cont_note_pages
+    line_script_pages
+    related_files
+    record_tags
+    stock_categories
+    metadata_record_assn
+    notes
+7.  metadata_field_map
+8.  scene_cont_notes
+    version_scenes
+    scene_setups
+    scene_lined_scripts
+    stock_records
+    tape_scenes
+    tape_records
+    scene_records
+    setup_records
+9.  transcripts
+    record_import_field_map
+    ignore_keywords
+    record_data_field_viewable
+    project_info
+    ltsa
+10. recordsDB-Tables
+11. Files

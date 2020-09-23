@@ -1,0 +1,21 @@
+{
+    "name": "sitecrafting/dash_exporter",
+    "bin": ["bin/dash-exporter"],
+    "description": "exporter for the dash tool",
+    "type": "library",
+    "require": {
+        "php": ">=7.2",
+        "kint-php/kint": "^3.1"
+    },
+    "authors": [
+        {
+            "name": "Sean Dean",
+            "email": "sdean@sitecrafting.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Dash\\Exporter\\": "src"
+        }
+    }
+}

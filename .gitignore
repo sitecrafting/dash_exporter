@@ -1,0 +1,5 @@
+/vendor/
+/.lando/mysql/*.sql
+errors.txt
+.env
+/uploads/
