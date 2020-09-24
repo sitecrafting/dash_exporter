@@ -354,16 +354,8 @@ class Util
 
                 if (strlen($import['zip_file']) > 0) {
                     $strZipFile = substr($import['zip_file'], 0, -3) . $timestamp . substr($import['zip_file'], -4, 4);
-                    // $strPath       = ABS_PATH . 'html/' . FILE_PATH_ALE_IMPORT . $strZipFile . "." . $timestamp;
-                    // $intPathLength = strlen($strPath);
-                    // $arrLink[] = FILE_PATH_ALE_IMPORT . $strZipFile;
-
-                    // $arrStructure    = MapDirectoryStructure($strPath);
-                    // $strFileFullPath = FindNestedFiles($arrStructure, $import['import_file'], $strPath);
 
                     if (self::CheckFile(getenv('EXPORT_FILE_ROOT') . FILE_PATH_ALE_IMPORT . $strZipFile . "." . $timestamp . "/" . $import['import_file'])) {
-                        // $strFileDir = substr($strFileFullPath, $intPathLength);
-                        // $strFileDir = $strFileDir ? $strFileDir : '/';
                         $arrLink[] = FILE_PATH_ALE_IMPORT . $strZipFile . "." . $timestamp . "/" . rawurlencode($import['import_file']);
                     } elseif (self::CheckFile(getenv('EXPORT_FILE_ROOT') . FILE_PATH_ALE_IMPORT . $strFileName)) {
                         $arrLink[] = FILE_PATH_ALE_IMPORT . $strFileName;
