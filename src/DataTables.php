@@ -16,7 +16,7 @@ class DataTables
                 "projects" => "project_id",
                 "studios"  => "studio_id",
             ],
-            "where"        => ["prjects" => "project_id"],
+            "where"        => ["projects" => "project_id"],
         ],
         "versions"                   => [
             'dependencies' => [
