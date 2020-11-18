@@ -112,7 +112,7 @@ class DataTables
                 'scenes'   => 'scene_id',
                 'imports'  => 'import_id',
             ],
-            'where'        => ['scenes' => 'scend_id'],
+            'where'        => ['versions' => 'version_id'],
         ],
         "scene_setups"               => [
             'dependencies' => [
@@ -183,7 +183,7 @@ class DataTables
             'where'        => ['projects' => 'project_id'],
         ],
         "record_data_field_viewable" => [
-            'dependencies' => ['projects' => 'project_id'],
+            'dependencies' => ['projects' => 'project_id','record_type' => 'record_type_id'],
             'where'        => ['projects' => 'project_id'],
         ],
         "project_info"               => [

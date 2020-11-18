@@ -49,6 +49,7 @@ class Controller
         $this->importDb = new PDO($dsn, $user, $pass);
 
         $this->projects = explode(",", getenv("EXPORT_PROJECTS"));
+        s($this->projects); die;
 
     }
 

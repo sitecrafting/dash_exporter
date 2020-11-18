@@ -163,7 +163,7 @@ class Util
             $stmnt->execute();
             $tblInfo = $stmnt->fetch(PDO::FETCH_ASSOC);
 
-            $newTblName = substr($tblInfo['Table'], 0, strrpos($tblInfo['Table'], "_")) . "_" . $key_map['projects'][$og_proj];
+            $newTblName = substr($tblInfo['Table'], 0, strrpos($tblInfo['Table'], "_")) . "_" . $key_map['record_type'][$art['id']];
             $newCreate  = str_replace($tblInfo['Table'], $newTblName, $tblInfo['Create Table']);
 
             echo "Creating " . $newTblName . PHP_EOL;
@@ -171,7 +171,7 @@ class Util
 
             $sql  = "UPDATE record_type SET record_data_table_name = ? WHERE id = ?";
             $stmt = $importDb->prepare($sql);
-            $stmt->execute([$newTblName, $key_map['projects'][$og_proj]]);
+            $stmt->execute([$newTblName, $key_map['record_type'][$art['id']]]);
 
             $og_rows = self::GetTableRows($ExportRecords, $art['record_data_table_name']);
 

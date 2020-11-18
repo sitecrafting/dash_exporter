@@ -9,7 +9,8 @@ services:
     ssl: true
     webroot: .
     xdebug: true
-
+    run:
+      - /app/.lando/bin/build.sh
   betadb:
     type: 'mysql:5.7'
     portforward: true
@@ -17,11 +18,11 @@ services:
       database: app
       user: mysql
       password: mysql
-    run_as_root:
-      - tar -xvzf /app/.lando/mysql/dbs.tar.gz -C /app/.lando/mysql/
-      - mysql -uroot -e "CREATE DATABASE IF NOT EXISTS records; GRANT SUPER ON *.* TO 'mysql'@'%' IDENTIFIED by 'mysql'; GRANT ALL PRIVILEGES ON records.* TO 'mysql'@'%' IDENTIFIED by 'mysql'; GRANT ALTER ROUTINE, CREATE ROUTINE, EXECUTE ON records.* TO 'mysql'@'%' IDENTIFIED by 'mysql'"
-      - mysql -uroot app < /app/.lando/mysql/beta_app.sql
-      - mysql -uroot records < /app/.lando/mysql/beta_records.sql
+    # run_as_root:
+    #   - tar -xvzf /app/.lando/mysql/dbs.tar.gz -C /app/.lando/mysql/
+    #   - mysql -uroot -e "CREATE DATABASE IF NOT EXISTS records; GRANT SUPER ON *.* TO 'mysql'@'%' IDENTIFIED by 'mysql'; GRANT ALL PRIVILEGES ON records.* TO 'mysql'@'%' IDENTIFIED by 'mysql'; GRANT ALTER ROUTINE, CREATE ROUTINE, EXECUTE ON records.* TO 'mysql'@'%' IDENTIFIED by 'mysql'"
+    #   - mysql -uroot app < /app/.lando/mysql/beta_app.sql
+    #   - mysql -uroot records < /app/.lando/mysql/beta_records.sql
 
   prddb:
     type: 'mysql:5.7'
@@ -30,10 +31,10 @@ services:
       database: app
       user: mysql
       password: mysql
-    run_as_root:
-      - mysql -uroot -e "CREATE DATABASE IF NOT EXISTS records; GRANT SUPER ON *.* TO 'mysql'@'%' IDENTIFIED by 'mysql'; GRANT ALL PRIVILEGES ON records.* TO 'mysql'@'%' IDENTIFIED by 'mysql'; GRANT ALTER ROUTINE, CREATE ROUTINE, EXECUTE ON records.* TO 'mysql'@'%' IDENTIFIED by 'mysql'"
-      - mysql -uroot app < /app/.lando/mysql/prd.sql
-      - rm /app/.lando/mysql/*.sql
+    # run_as_root:
+    #   - mysql -uroot -e "CREATE DATABASE IF NOT EXISTS records; GRANT SUPER ON *.* TO 'mysql'@'%' IDENTIFIED by 'mysql'; GRANT ALL PRIVILEGES ON records.* TO 'mysql'@'%' IDENTIFIED by 'mysql'; GRANT ALTER ROUTINE, CREATE ROUTINE, EXECUTE ON records.* TO 'mysql'@'%' IDENTIFIED by 'mysql'"
+    #   - mysql -uroot app < /app/.lando/mysql/prd.sql
+    #   - rm /app/.lando/mysql/*.sql
 
 
 tooling:
