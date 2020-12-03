@@ -49,7 +49,6 @@ class Controller
         $this->importDb = new PDO($dsn, $user, $pass);
 
         $this->projects = explode(",", getenv("EXPORT_PROJECTS"));
-        s($this->projects); die;
 
     }
 
@@ -168,21 +167,28 @@ class Controller
             if (!empty($this->key_map[$whereTable])) {
 
                 $whereCol = $table['where'][$whereTable];
-                $whereVal = implode(",", array_keys($this->key_map[$whereTable]));
+                $qMarks   = str_repeat('?,', count($this->key_map[$whereTable]) - 1) . '?';
 
-                $sql   = "SELECT * FROM {$tname} WHERE {$whereCol} IN (?)";
+                $sql = "SELECT * FROM {$tname} WHERE {$whereCol} IN ($qMarks)";
+
                 $stmnt = $this->exportDb->prepare($sql);
-                $stmnt->execute([$whereVal]);
+
+                $stmnt->execute(array_keys($this->key_map[$whereTable]));
+
                 // die(s($stmnt->debugDumpParams()));
                 $tblRows = $stmnt->fetchAll(PDO::FETCH_ASSOC);
-
                 if (!empty($tblRows)) {
                     echo "Inserting data from " . $tname . PHP_EOL;
                     $insertRows   = Util::CreateInsert($tblRows, $dependencies, $this->key_map);
+
                     $insertFields = Util::DeriveFields($tblRows[0]);
 
                     $newId = Util::InsertMultiple($this->importDb, $tname, $insertFields, $insertRows);
-                    Util::UpdateDataMap($this->key_map, $tname, $tblRows, $newId);
+
+                    if ('ltsa' !== $tname) {
+                        Util::UpdateDataMap($this->key_map, $tname, $tblRows, $newId);
+                    }
+
                 }
 
             }

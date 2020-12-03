@@ -59,10 +59,11 @@ class DataTables
             ],
             'where'        => ['units' => 'unit_id'],
         ],
-        "line_script_pages"          => [
+        "lined_script_pages"          => [
             'dependencies' => [
                 'units'   => 'unit_id',
-                'imports' => 'import_id'],
+                'imports' => 'import_id',
+            ],
             'where'        => ['units' => 'unit_id'],
         ],
         "related_files"              => [
@@ -104,7 +105,7 @@ class DataTables
                 'imports'         => 'import_id',
                 'cont_note_pages' => 'note_id',
             ],
-            'where'        => ['notes' => 'note_id'],
+            'where'        => ['scenes' => 'scene_id'],
         ],
         "version_scenes"             => [
             'dependencies' => [
@@ -126,7 +127,7 @@ class DataTables
             'dependencies' => [
                 'scenes'            => 'scene_id',
                 'imports'           => 'import_id',
-                'line_script_pages' => 'script_id',
+                'lined_script_pages' => 'script_id',
             ],
             'where'        => ['scenes' => 'scene_id'],
         ],
@@ -135,7 +136,7 @@ class DataTables
                 'stock_categories' => 'cat_id',
                 'records'          => 'record_id',
             ],
-            'where'        => ['scenes' => 'record_id'],
+            'where'        => ['records' => 'record_id'],
         ],
         "tape_scenes"                => [
             'dependencies' => [
@@ -183,17 +184,17 @@ class DataTables
             'where'        => ['projects' => 'project_id'],
         ],
         "record_data_field_viewable" => [
-            'dependencies' => ['projects' => 'project_id','record_type' => 'record_type_id'],
+            'dependencies' => ['projects' => 'project_id', 'record_type' => 'record_type_id'],
             'where'        => ['projects' => 'project_id'],
         ],
         "project_info"               => [
             'dependencies' => ['projects' => 'project_id'],
             'where'        => ['projects' => 'project_id'],
         ],
-        "ltsa"                       => [
-            'dependencies' => ['projects' => 'project_id'],
-            'where'        => ['projects' => 'project_id'],
-        ],
+        // "ltsa"                       => [
+        //     'dependencies' => ['projects' => 'project_id'],
+        //     'where'        => ['projects' => 'project_id'],
+        // ],
 
     ];
 
